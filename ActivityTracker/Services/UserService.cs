@@ -20,6 +20,14 @@ namespace ActivityTracker.Services
             return await _context.Users
                 .FirstOrDefaultAsync(u => u.Email == email);
         }
+        public async Task<ApplicationUser> DeleteUserProfileAsync(string email)
+        {
+            var user =  await _context.Users
+                .FirstOrDefaultAsync(u => u.Email == email);
+            _context.Users.Remove(user);
+            _context.SaveChanges();
+            return user;
+        }
 
         public async Task<string> GetUserRegionCodeAsync(string ipAddress)
         {
